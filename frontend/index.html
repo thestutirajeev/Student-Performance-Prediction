@@ -1,0 +1,55 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Marks Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-blue-50 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+    <h1 class="text-2xl font-bold mb-6 text-center">🎓 Marks Predictor</h1>
+    <form id="predictForm" class="space-y-4">
+      <input class="w-full border p-2 rounded" type="number" placeholder="Study Time (1-4)" name="studytime" required>
+      <input class="w-full border p-2 rounded" type="number" placeholder="Failures (0-3)" name="failures" required>
+      <input class="w-full border p-2 rounded" type="number" placeholder="Absences" name="absences" required>
+      <input class="w-full border p-2 rounded" type="number" placeholder="Go Out (1-5)" name="goout" required>
+      <select class="w-full border p-2 rounded" name="famsup">
+        <option value="yes">Family Support: Yes</option>
+        <option value="no">Family Support: No</option>
+      </select>
+      <select class="w-full border p-2 rounded" name="schoolsup">
+        <option value="yes">School Support: Yes</option>
+        <option value="no">School Support: No</option>
+      </select>
+      <input class="w-full border p-2 rounded" type="number" placeholder="Health (1-5)" name="health" required>
+
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Predict Marks</button>
+    </form>
+    <div id="result" class="mt-4 text-center text-xl font-semibold text-green-600"></div>
+  </div>
+<script>
+  document.getElementById('predictForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const formObj = Object.fromEntries(formData.entries());
+
+    // Convert yes/no to 1/0
+    formObj.famsup = formObj.famsup === 'yes' ? 1 : 0;
+    formObj.schoolsup = formObj.schoolsup === 'yes' ? 1 : 0;
+
+    const response = await fetch('http://127.0.0.1:5000/predict', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(formObj)
+    });
+
+    const data = await response.json();
+    document.getElementById('result').textContent = `Predicted Marks: ${data.predicted_marks}`;
+  });
+</script>
+
+</body>
+</html>
