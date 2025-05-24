@@ -1,34 +1,83 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Student Marks Predictor</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-blue-50 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center">🎓 Marks Predictor</h1>
-    <form id="predictForm" class="space-y-4">
-      <input class="w-full border p-2 rounded" type="number" placeholder="Study Time (1-4)" name="studytime" required>
-      <input class="w-full border p-2 rounded" type="number" placeholder="Failures (0-3)" name="failures" required>
-      <input class="w-full border p-2 rounded" type="number" placeholder="Absences" name="absences" required>
-      <input class="w-full border p-2 rounded" type="number" placeholder="Go Out (1-5)" name="goout" required>
-      <select class="w-full border p-2 rounded" name="famsup">
-        <option value="yes">Family Support: Yes</option>
-        <option value="no">Family Support: No</option>
-      </select>
-      <select class="w-full border p-2 rounded" name="schoolsup">
-        <option value="yes">School Support: Yes</option>
-        <option value="no">School Support: No</option>
-      </select>
-      <input class="w-full border p-2 rounded" type="number" placeholder="Health (1-5)" name="health" required>
+<body class="bg-blue-50 min-h-screen relative flex items-center justify-center px-4">
 
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Predict Marks</button>
+  <!-- Top-left image -->
+  <img src="s1.jpg" alt="Top Left" class="hidden sm:block absolute top-4 left-4 w-24 h-24 object-cover rounded-lg shadow-lg" />
+
+  <!-- Bottom-right image -->
+  <img src="s2.jpg" alt="Bottom Right" class="hidden sm:block absolute bottom-4 right-4 w-24 h-24 object-cover rounded-lg shadow-lg" />
+
+  <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-md
+              sm:max-w-lg md:max-w-xl
+             ">
+    <h1 class="text-3xl font-bold mb-8 text-center text-blue-700">🎓 Marks Predictor</h1>
+    <form id="predictForm" class="space-y-6">
+      
+      <div>
+        <label for="studytime" class="block text-gray-700 font-semibold mb-1">Study Time (1-4)</label>
+        <input id="studytime" name="studytime" type="number" min="1" max="4" required
+               class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="failures" class="block text-gray-700 font-semibold mb-1">Failures (0-3)</label>
+        <input id="failures" name="failures" type="number" min="0" max="3" required
+               class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="absences" class="block text-gray-700 font-semibold mb-1">Absences</label>
+        <input id="absences" name="absences" type="number" min="0" required
+               class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="goout" class="block text-gray-700 font-semibold mb-1">Go Out (1-5)</label>
+        <input id="goout" name="goout" type="number" min="1" max="5" required
+               class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <div>
+        <label for="famsup" class="block text-gray-700 font-semibold mb-1">Family Support</label>
+        <select id="famsup" name="famsup"
+                class="w-full border border-gray-300 rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="schoolsup" class="block text-gray-700 font-semibold mb-1">School Support</label>
+        <select id="schoolsup" name="schoolsup"
+                class="w-full border border-gray-300 rounded-md p-3 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="health" class="block text-gray-700 font-semibold mb-1">Health (1-5)</label>
+        <input id="health" name="health" type="number" min="1" max="5" required
+               class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <button type="submit" 
+              class="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-semibold
+                     hover:bg-blue-700 transition-colors duration-200">
+        Predict Marks
+      </button>
     </form>
-    <div id="result" class="mt-4 text-center text-xl font-semibold text-green-600"></div>
+
+    <div id="result" class="mt-6 text-center text-xl font-semibold text-green-600"></div>
   </div>
+
 <script>
   document.getElementById('predictForm').addEventListener('submit', async (e) => {
     e.preventDefault();
